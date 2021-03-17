@@ -48,7 +48,7 @@ const searchByType = (req, res) => {
 };
 
 const searchByTechnology = (req, res) => {
-  const technologySearched = req.params ? req.params.tecnology : "";
+  const technologySearched = req.params ? req.params.technology : "";
   let jobFilter = [];
   if (jobs instanceof Array) {
     jobFilter = jobs.filter((job) =>
