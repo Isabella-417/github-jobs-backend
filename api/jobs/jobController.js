@@ -1,4 +1,5 @@
 const jobs = require("./jobs.json");
+const { filterParams } = require("../../utils");
 
 const getList = (req, res) => {
   if (jobs instanceof Array) {
@@ -38,12 +39,30 @@ const searchByKeyword = (req, res) => {
   res.json(jobFilter);
 };
 
-const searchByType = (req, res) => {
-  const type = req.params ? req.params.type : "";
-  let jobFilter = [];
+const searchByLocation = (req, res) => {
+  const location = req.query ? req.query : "";
+  const selectedLocations = Object.values(filterParams(location, "location"));
+  let jobsInLocation = [];
   if (jobs instanceof Array) {
-    jobFilter = jobs.filter((job) => job.type.toUpperCase() === type);
+    jobsInLocation = jobs.filter((job) =>
+      selectedLocations.includes(job.location.toUpperCase())
+    );
+    return res.status(200).json(jobsInLocation);
   }
+
+  return res.status(404).json([]);
+};
+
+const searchByType = (req, res) => {
+  const type = req.query ? req.query : "";
+  const selectedTypes = filterParams(type, "type");
+
+  if (jobs instanceof Array) {
+    jobFilter = jobs.filter((job) => {
+      return Object.values(selectedTypes).includes(job.type.toUpperCase());
+    });
+  }
+
   res.status(200).json(jobFilter);
 };
 
@@ -61,6 +80,7 @@ const searchByTechnology = (req, res) => {
 module.exports = {
   getList,
   getLocations,
+  searchByLocation,
   searchByType,
   searchByTechnology,
   searchByKeyword,
