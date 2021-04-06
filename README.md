@@ -6,11 +6,11 @@
 
 <div align="center">
   <h3>
-    <a href="https://{your-demo-link.your-domain}">
+    <a href="#">
       Demo
     </a>
     <span> | </span>
-    <a href="https://{your-url-to-the-solution}">
+    <a href="#">
       Solution
     </a>
   </h3>
@@ -31,21 +31,18 @@
 
 ## Overview
 
-![screenshot](https://user-images.githubusercontent.com/16707738/92399059-5716eb00-f132-11ea-8b14-bcacdc8ec97b.png)
+| Route               | HTTP Verb | Description                          |
+| --------------------| --------- | ------------------------------------ |
+| /jobs/places        | GET       | Get work locations                   |
+| /jobs/stacks        | GET       | Get work stack technologies          |
+| /jobs/filters       | GET       | Search filter according to parameters|
 
-
-### Built With
-
-- [React](https://reactjs.org/)
-- [Tailwind](https://tailwindcss.com/)
 
 ## Features
-
 
 This application/site was created as a submission to a Fullstack course challenge. The challenge was to build an application to complete the given user stories.
 
 ## How To Use
-
 
 To clone and run this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
 
@@ -62,7 +59,6 @@ $ npm start
 
 ## Acknowledgements
 
-- [Steps to replicate a design with only HTML and CSS](https://devchallenges-blogs.web.app/how-to-replicate-design/)
 - [Node.js](https://nodejs.org/)
 - [Marked - a markdown parser](https://github.com/chjj/marked)
 
