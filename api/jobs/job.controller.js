@@ -1,9 +1,35 @@
 const jobs = require("./jobs.json");
 const { filterParams } = require("../../utils");
 
+const generatePagination = (currentPage, results) => {
+  const totalPages = results.length;
+  const previousPage = currentPage === 1 ? "" : `?page=${currentPage - 1}`;
+  const nextPage =
+    currentPage >= totalPages
+      ? `?page=${totalPages}`
+      : `?page=${currentPage + 1}`;
+  const pages = Math.ceil((totalPages - currentPage) / 10);
+  currentPage = (currentPage - 1) * 10 + 1;
+
+  const searchingParams = {
+    info: {
+      currentPage: currentPage,
+      count: totalPages,
+      pages: pages,
+      next: nextPage,
+      prev: previousPage,
+    },
+    results: results.slice(currentPage, currentPage + 10),
+  };
+
+  return searchingParams;
+};
+
 const getList = (req, res) => {
   if (jobs instanceof Array) {
-    return res.status(200).json(jobs);
+    const currentPage = req.query["page"] ? Number(req.query["page"]) : 1;
+    const searchingParams = generatePagination(currentPage, jobs);
+    return res.status(200).json(searchingParams);
   }
   res.status(404).json([]);
 };
@@ -91,7 +117,9 @@ const searchByQuery = (req, res) => {
     const selectedStacks = Object.values(filterParams(query, "stack"));
     results = searchByStack(selectedStacks, results);
   }
-  res.status(200).json(results);
+  const currentPage = req.query["page"] ? Number(req.query["page"]) : 1;
+  const searchingParams = generatePagination(currentPage, results);
+  res.status(200).json(searchingParams);
 };
 
 module.exports = {
